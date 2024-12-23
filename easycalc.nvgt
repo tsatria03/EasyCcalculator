@@ -1,0 +1,80 @@
+#include"bgt_compat.nvgt"
+#include"sound_pool.nvgt"
+#include"speech.nvgt"
+#include"includes/key_hold.nvgt"
+#include"includes/text_input.nvgt"
+int p=0;
+double answer;
+string[] whates;
+sound_pool pool, spool;
+text_input v;
+void main()
+{
+show_game_window("math calculator");
+whates.insert_last("+");
+whates.insert_last("subtract");
+whates.insert_last("multiply");
+whates.insert_last("divide");
+while(true)
+{
+wait(5);
+if(key_pressed(KEY_DOWN))
+{
+p++;
+if(p>=whates.length())
+{
+p=(whates.length()-1);
+}
+speak(whates[p]+". "+p+"of"+(whates.length()-1));
+}
+if(key_pressed(KEY_UP))
+{
+p--;
+if(p<0)
+{
+p=0;
+}
+speak(whates[p]+". "+p+"of"+(whates.length()-1));
+}
+if(p==0 and key_pressed(KEY_RETURN))
+{
+string plus=v.input("type the first number.");
+string plus2=v.input("type the second number.");
+answer=string_to_number(plus)+string_to_number(plus2);
+speak("the answer is"+answer+".");
+}
+if(p==1 and key_pressed(KEY_RETURN))
+{
+string plus=v.input("type the first number.");
+string plus2=v.input("type the second number.");
+answer=string_to_number(plus)-string_to_number(plus2);
+speak("the answer is"+answer+".");
+}
+if(p==2 and key_pressed(KEY_RETURN))
+{
+string plus=v.input("type the first number.");
+string plus2=v.input("type the second number.");
+answer=string_to_number(plus)*string_to_number(plus2);
+speak("the answer is"+answer+".");
+}
+if(p==3 and key_pressed(KEY_RETURN))
+{
+string plus=v.input("type the first number.");
+if(plus=="")
+{
+return;
+}
+string plus2=v.input("type the second number.");
+if(plus2=="")
+{
+return;
+}
+answer=string_to_number(plus)/string_to_number(plus2);
+speak("the answer is"+answer+".");
+}
+if(key_pressed(KEY_ESCAPE))
+{
+exit();
+}
+}
+}
